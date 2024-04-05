@@ -2,21 +2,21 @@ function convertToMontlyReturnRate(yearlyReturnRate) {
   return yearlyReturnRate ** (1 / 12);
 }
 
-function generateReturnsArrey(
+export default function generateReturnsArrey(
   startingAmount = 0,
   timeHorizon = 0,
   timePeriod = "monthly",
   mounthlyContribution = 0,
   returnRate = 0,
-  returnTimeFrame = "monthly"
+  returnRatePeriod = "monthly"
 ) {
   if (!timeHorizon || !startingAmount) {
     throw new Error(
       "Investimento inicial e prazo devem ser preenchidos com valores positivos."
     );
   }
-  const finalyReturnRate =
-    returnTimeFrame === "monthly"
+  const finalyReturnRatePeriod =
+    returnRatePeriod === "monthly"
       ? 1 + returnRate / 100
       : convertToMontlyReturnRate(1 + returnRate / 100);
 
@@ -38,7 +38,7 @@ function generateReturnsArrey(
     timeReference++
   ) {
     const totalAmount =
-      returnsArrey[timeReference - 1].totalAmount * finalyReturnRate +
+      returnsArrey[timeReference - 1].totalAmount * finalyReturnRatePeriod +
       mounthlyContribution;
     const interestReturns = totalAmount - mounthlyContribution;
     const investedAmount =

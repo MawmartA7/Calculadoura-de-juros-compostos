@@ -11,57 +11,61 @@
 <body class="w-full h-[100dvh] grid grid-rows-2 grid-cols-3 font-medium">
   <asid class="bg-zinc-700 text-emerald-600 row-span-2 flex flex-col justify-between py-5 px-2">
     <h1 class="text-2xl font-bold px-6">Calculadora de Investimentos</h1>
-    <form class="w-full">
-      <div class="flex w-full flex-col px-6 my-2">
-        <label class="font-bold text-emerald-600" for="starting-amount">Investimento inicial</label>
+    <form class="w-full" id="investment-form">
+      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem]">
+        <label class="font-bold" for="starting-amount">Investimento inicial</label>
         <div class="flex text-black">
           <input class="w-1/6 text-center rounded-l-lg" type="text" value="R$" disabled>
-          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0.00" id="starting-amount">
+          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0.00" required name="form-elements"
+            id="starting-amount">
         </div>
       </div>
-      <div class="flex w-full flex-col px-6 my-2">
-        <label class="font-bold text-emerald-600" for="additional-contribution">Aportes adicionais</label>
+      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem]">
+        <label class="font-bold" for="additional-contribution">Aportes adicionais</label>
         <div class="flex text-black">
           <input class="w-1/6 text-center rounded-l-lg" type="text" value="R$" disabled>
-          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0.00" id="additional-contribution">
+          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0.00" name="form-elements"
+            id="additional-contribution">
         </div>
       </div>
-      <div class="flex w-full flex-col px-6 my-2">
-        <label class="font-bold text-emerald-600" for="time-amount">Prazo</label>
+      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem]">
+        <label class="font-bold" for="time-amount">Prazo</label>
         <div class="flex text-black">
-          <input class="w-4/6 rounded-l-lg pl-1.5" type="text" placeholder="0" id="time-amount">
+          <input class="w-4/6 rounded-l-lg pl-1.5" type="text" placeholder="0" required name="form-elements"
+            id="time-amount">
           <select
             class="w-2/6 rounded-r-lg text-center border-l-2 border-black hover:bg-black hover:text-emerald-600 focus:bg-black focus:text-emerald-600 cursor-pointer select-none"
-            id="time-amount-period">
+            name="form-elements" id="time-amount-period">
             <option value="monthly">Mensal</option>
             <option value="yearly">Anual</option>
           </select>
         </div>
       </div>
-      <div class="flex w-full flex-col px-6 my-2">
-        <label class="font-bold text-emerald-600" for="return-rate">Rentabilidade</label>
+      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem]">
+        <label class="font-bold" for="return-rate">Rentabilidade</label>
         <div class="flex text-black">
           <input class="w-1/6 text-center rounded-l-lg" type="text" value="%" disabled>
-          <input class="w-3/6 pl-1.5" type="text" placeholder="0" id="return-rate">
+          <input class="w-3/6 pl-1.5" type="text" placeholder="0" required name="form-elements" id="return-rate">
           <select
             class="w-2/6 rounded-r-lg text-center border-l-2 border-black hover:bg-black hover:text-emerald-600 focus:bg-black focus:text-emerald-600 cursor-pointer select-none"
-            placeholder="0.00" id="evaluation-period">
+            der="0.00" required name="form-elements" id="evaluation-period">
             <option value="monthly">Mensal</option>
             <option value="yearly">Anual</option>
           </select>
         </div>
       </div>
-      <div class="flex w-full flex-col px-6 my-2">
-        <label class="font-bold text-emerald-600" for="tax-rate">Impostos sobre lucro</label>
+      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem]">
+        <label class="font-bold" for="tax-rate">Impostos sobre lucro</label>
         <div class="flex text-black">
           <input class="w-1/6 text-center rounded-l-lg" type="text" value="%" disabled>
-          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0" id="tax-rate">
+          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0" name="form-elements" id="tax-rate">
         </div>
       </div>
     </form>
     <div class="flex h-12 px-6 my-8 w-full gap-2">
-      <button class="w-1/2 rounded-lg bg-black text-emerald-600 hover:bg-zinc-950">Calcular</button>
-      <button class="w-1/2 rounded-lg hover:bg-zinc-900">Limpar</button>
+      <button class="w-1/2 rounded-lg bg-black text-emerald-600 hover:bg-zinc-950" type="submit" form="investment-form"
+        id="calculate-results">Calcular</button>
+      <button class="w-1/2 rounded-lg hover:bg-zinc-900" id="clear-form">Limpar</button>
     </div>
   </asid>
   <main>
