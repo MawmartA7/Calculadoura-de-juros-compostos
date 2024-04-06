@@ -15,7 +15,7 @@ export default function generateReturnsArrey(
       "Investimento inicial e prazo devem ser preenchidos com valores positivos."
     );
   }
-  const finalyReturnRatePeriod =
+  const finalReturnRatePeriod =
     returnRatePeriod === "monthly"
       ? 1 + returnRate / 100
       : convertToMontlyReturnRate(1 + returnRate / 100);
@@ -38,9 +38,10 @@ export default function generateReturnsArrey(
     timeReference++
   ) {
     const totalAmount =
-      returnsArrey[timeReference - 1].totalAmount * finalyReturnRatePeriod +
+      returnsArrey[timeReference - 1].totalAmount * finalReturnRatePeriod +
       mounthlyContribution;
-    const interestReturns = totalAmount - mounthlyContribution;
+    const interestReturns =
+      returnsArrey[timeReference - 1].totalAmount * (finalReturnRatePeriod - 1);
     const investedAmount =
       startingAmount + mounthlyContribution * timeReference;
     const totalInterestReturns = totalAmount - investedAmount;

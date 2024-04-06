@@ -1,9 +1,19 @@
 import generateReturnsArrey from "./src/investmentGoals";
+import { Chart } from "chart.js/auto";
 
+const finalMoneyChart = document.getElementById("final-money-distribution");
+const progressionChart = document.getElementById("progression");
 const clearFormButton = document.getElementById("clear-form");
-
 const form = document.querySelector("form");
+let doughnutChartReference = {};
+let progressionChartReference = {};
+
+function formatCurrency(value) {
+  return value.toFixed(2);
+}
+
 function renderProgression() {
+  resetCharts();
   const startingAmount = Number(
     form["form-elements"][0].value.replace(",", ".")
   );
@@ -25,6 +35,99 @@ function renderProgression() {
     returnRatePeriod
   );
   console.log(returnsArrey);
+
+  const finalInvestmentObject = returnsArrey[returnsArrey.length - 1];
+  if (taxRate === "" || taxRate <= 0) {
+    doughnutChartReference = new Chart(finalMoneyChart, {
+      type: "doughnut",
+      data: {
+        labels: ["Total investido", "Total de rendimento"],
+        datasets: [
+          {
+            data: [
+              formatCurrency(finalInvestmentObject.investedAmount),
+              formatCurrency(finalInvestmentObject.totalInterestReturns),
+            ],
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
+            hoverOffset: 4,
+          },
+        ],
+      },
+    });
+  } else {
+    doughnutChartReference = new Chart(finalMoneyChart, {
+      type: "doughnut",
+      data: {
+        labels: ["Total investido", "Total de rendimento", "Imposto"],
+        datasets: [
+          {
+            data: [
+              formatCurrency(finalInvestmentObject.investedAmount),
+              formatCurrency(
+                finalInvestmentObject.totalInterestReturns * (1 - taxRate / 100)
+              ),
+              formatCurrency(
+                finalInvestmentObject.totalInterestReturns * (taxRate / 100)
+              ),
+            ],
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      },
+    });
+  }
+  progressionChartReference = new Chart(progressionChart, {
+    type: "bar",
+    data: {
+      labels: returnsArrey.map((investmentObject) => investmentObject.month),
+      datasets: [
+        {
+          label: "Total investido",
+          data: returnsArrey.map((investmentObject) =>
+            formatCurrency(investmentObject.investedAmount)
+          ),
+          backgroundColor: "rgb(255, 99, 132)",
+        },
+        {
+          label: "Retorno do investimento",
+          data: returnsArrey.map((investmentObject) =>
+            formatCurrency(investmentObject.interestReturns)
+          ),
+          backgroundColor: "rgb(54, 162, 235)",
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true,
+        },
+      },
+    },
+  });
+}
+
+function isObjectEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
+function resetCharts() {
+  if (
+    !isObjectEmpty(doughnutChartReference) &&
+    !isObjectEmpty(progressionChartReference)
+  ) {
+    doughnutChartReference.destroy();
+    progressionChartReference.destroy();
+  }
 }
 
 function clearForm() {
@@ -35,6 +138,7 @@ function clearForm() {
   form["form-elements"][4].value = "";
   form["form-elements"][5].value = "monthly";
   form["form-elements"][6].value = "";
+  resetCharts();
 
   const errorInputsContainers = document.querySelectorAll(".error");
   for (const errorInputsContainer of errorInputsContainers) {
