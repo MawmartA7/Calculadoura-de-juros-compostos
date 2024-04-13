@@ -8,7 +8,7 @@
   <title>Calculadora de investimento</title>
 </head>
 
-<body class="w-full h-[100dvh] grid grid-rows-2 grid-cols-3 font-medium">
+<body class="w-full h-[100dvh] grid grid-rows-2 grid-cols-3 font-medium box-content">
   <asid class="bg-zinc-700 text-emerald-600 row-span-2 flex flex-col justify-between py-5 px-2">
     <h1 class="text-2xl text-center font-bold px-6">Calculadora de Investimentos</h1>
     <form class="w-full" id="investment-form">
@@ -68,24 +68,33 @@
       <button class="w-1/2 rounded-lg hover:bg-zinc-900" id="clear-form">Limpar</button>
     </div>
   </asid>
-  <main class="row-span-2 col-span-2">
-    <!-- <section class="h-full" id="charts-container">
-      <div class="h-[36%] flex flex-col items-center pb-10">
-        <p class="font-bold text-lg">Resultado Final</p>
-        <canvas id="final-money-distribution"></canvas>
-      </div>
-      <div class="h-[56%] flex flex-col items-center">
-        <p class="font-bold text-lg">Progressão</p>
-        <canvas id="progression"></canvas>
-      </div>
-    </section> -->
-    <section class="h-full overflow-y-auto" id="table-container">
-      <p class="font-bold text-lg bg-neutral-400 text-center">Resultados Mensais</p>
-      <table class="w-full max-h-full border border-separate" id="results-table">
-      </table>
-    </section>
+  <main class="row-span-2 col-span-2 relative">
+    <button
+      class="absolute top-1/2 left-0 text-6xl bg-slate-200 opacity-50 w-8 hover:opacity-100 focus:opacity-100 max-h-20 rounded-r-xl "
+      id="slide-arrow-previous"><i class="fa-sharp fa-solid fa-caret-left " style="color: #555;"></i></button>
+    <button
+      class="absolute top-1/2 right-0 text-6xl bg-slate-200 opacity-50 w-8 hover:opacity-100 focus:opacity-100 max-h-20 rounded-l-xl "
+      id="slide-arrow-next"><i class="fa-sharp fa-solid fa-caret-right " style="color: #555;"></i></button>
+    <div class="h-full w-full flex overflow-x-auto scroll-smooth" id="carousel">
+      <section class="h-full basis-full shrink-0" id="charts-container">
+        <div class="h-[36%] flex flex-col items-center pb-10">
+          <p class="font-bold text-lg">Resultado Final</p>
+          <canvas id="final-money-distribution"></canvas>
+        </div>
+        <div class="h-[56%] flex flex-col items-center">
+          <p class="font-bold text-lg">Progressão</p>
+          <canvas id="progression"></canvas>
+        </div>
+      </section>
+      <section class="h-full basis-full shrink-0 overflow-y-auto" id="table-container">
+        <p class="font-bold text-lg bg-neutral-400 text-center">Resultados Mensais</p>
+        <table class="w-full max-h-full border border-separate" id="results-table">
+        </table>
+      </section>
+    </div>
   </main>
   <script type="module" src="/main.js"></script>
+  <script src="https://kit.fontawesome.com/4922402ab9.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
