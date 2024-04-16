@@ -170,6 +170,7 @@ function renderProgression() {
     },
   });
   createTable(colomnsArrey, returnsArrey, "results-table");
+  nextButton.classList.remove("hidden");
 }
 
 function isObjectEmpty(obj) {
@@ -194,6 +195,12 @@ function clearForm() {
   document.getElementById("return-rate").value = "";
   document.getElementById("evaluation-period").value = "monthly";
   document.getElementById("tax-rate").value = "";
+  nextButton.classList.add("hidden");
+  previousButton.classList.add("hidden");
+  Array.from(document.getElementById("results-table").children).forEach(
+    (elementOfTable) => elementOfTable.remove()
+  );
+  carouselElement.scrollLeft -= mainElement.clientWidth;
   resetCharts();
 
   const errorInputsContainers = document.querySelectorAll(".error");
@@ -237,6 +244,19 @@ function validateInput(event) {
   }
 }
 
+function changeMode(mode) {
+  if (mode === "white") {
+    document.querySelector("body").classList.remove("dark");
+    whiteModeButton.classList.add("hidden");
+    darkModeButton.classList.remove("hidden");
+  } else {
+    document.querySelector("body").classList.add("dark");
+    whiteModeButton.classList.remove("hidden");
+    darkModeButton.classList.add("hidden");
+  }
+  localStorage.setItem("mode", mode);
+}
+
 for (const formElement of form) {
   if (formElement.tagName === "INPUT" && formElement.hasAttribute("name")) {
     formElement.addEventListener("blur", validateInput);
@@ -247,6 +267,12 @@ const previousButton = document.getElementById("slide-arrow-previous");
 const nextButton = document.getElementById("slide-arrow-next");
 const expandButton = document.getElementById("expand-main");
 const compressButton = document.getElementById("compress-main");
+const darkModeButton = document.getElementById("dark-mode-button");
+const whiteModeButton = document.getElementById("white-mode-button");
+const beforeMode = localStorage.getItem("mode") ?? "white";
+
+changeMode(beforeMode);
+
 previousButton.addEventListener("click", () => {
   carouselElement.scrollLeft -= mainElement.clientWidth;
   nextButton.classList.remove("hidden");
@@ -266,6 +292,9 @@ form.addEventListener("submit", (event) => {
   }
   renderProgression();
 });
+
+whiteModeButton.addEventListener("click", () => changeMode("white"));
+darkModeButton.addEventListener("click", () => changeMode("dark"));
 
 clearFormButton.addEventListener("click", clearForm);
 
