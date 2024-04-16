@@ -1,7 +1,9 @@
 import generateReturnsArrey from "./src/investmentGoals";
-import { Chart } from "chart.js/auto";
+import { Chart, plugins } from "chart.js/auto";
 import createTable from "./src/table";
 
+const asideElement = document.querySelector("aside");
+const mainElement = document.querySelector("main");
 const finalMoneyChart = document.getElementById("final-money-distribution");
 const progressionChart = document.getElementById("progression");
 const clearFormButton = document.getElementById("clear-form");
@@ -9,7 +11,7 @@ const form = document.querySelector("form");
 let doughnutChartReference = {};
 let progressionChartReference = {};
 
-function formatCurrencyToTable(value) {
+function formatCurrencyBRL(value) {
   return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
@@ -21,22 +23,22 @@ const colomnsArrey = [
   {
     columnLabel: "Total Investido",
     accessor: "investedAmount",
-    format: (numberInfo) => formatCurrencyToTable(numberInfo),
+    format: (numberInfo) => formatCurrencyBRL(numberInfo),
   },
   {
     columnLabel: "Rendimento mensal",
     accessor: "interestReturns",
-    format: (numberInfo) => formatCurrencyToTable(numberInfo),
+    format: (numberInfo) => formatCurrencyBRL(numberInfo),
   },
   {
     columnLabel: "Rendimento total",
     accessor: "totalInterestReturns",
-    format: (numberInfo) => formatCurrencyToTable(numberInfo),
+    format: (numberInfo) => formatCurrencyBRL(numberInfo),
   },
   {
     columnLabel: "Quantia Total",
     accessor: "totalAmount",
-    format: (numberInfo) => formatCurrencyToTable(numberInfo),
+    format: (numberInfo) => formatCurrencyBRL(numberInfo),
   },
 ];
 
@@ -44,19 +46,41 @@ function formatCurrencyToChart(value) {
   return value.toFixed(2);
 }
 
+function expandMain() {
+  asideElement.classList.add("hidden");
+  asideElement.classList.remove("col-span-1");
+  mainElement.classList.add("col-span-3");
+  mainElement.classList.remove("col-span-2");
+  expandButton.classList.add("hidden");
+  compressButton.classList.remove("hidden");
+}
+
+function compressMain() {
+  asideElement.classList.remove("hidden");
+  asideElement.classList.add("col-span-1");
+  mainElement.classList.remove("col-span-3");
+  mainElement.classList.add("col-span-2");
+  compressButton.classList.add("hidden");
+  expandButton.classList.remove("hidden");
+}
+
 function renderProgression() {
   resetCharts();
   const startingAmount = Number(
-    form["form-elements"][0].value.replace(",", ".")
+    document.getElementById("starting-amount").value.replace(",", ".")
   );
   const additionalContribution = Number(
-    form["form-elements"][1].value.replace(",", ".")
+    document.getElementById("additional-contribution").value.replace(",", ".")
   );
-  const timeAmount = Number(form["form-elements"][2].value);
-  const timeAmountPeriod = form["form-elements"][3].value;
-  const returnRate = Number(form["form-elements"][4].value.replace(",", "."));
-  const returnRatePeriod = form["form-elements"][5].value;
-  const taxRate = Number(form["form-elements"][6].value.replace(",", "."));
+  const timeAmount = Number(document.getElementById("time-amount").value);
+  const timeAmountPeriod = document.getElementById("time-amount-period").value;
+  const returnRate = Number(
+    document.getElementById("return-rate").value.replace(",", ".")
+  );
+  const returnRatePeriod = document.getElementById("evaluation-period").value;
+  const taxRate = Number(
+    document.getElementById("tax-rate").value.replace(",", ".")
+  );
 
   const returnsArrey = generateReturnsArrey(
     startingAmount,
@@ -145,7 +169,6 @@ function renderProgression() {
       },
     },
   });
-
   createTable(colomnsArrey, returnsArrey, "results-table");
 }
 
@@ -164,13 +187,13 @@ function resetCharts() {
 }
 
 function clearForm() {
-  form["form-elements"][0].value = "";
-  form["form-elements"][1].value = "";
-  form["form-elements"][2].value = "";
-  form["form-elements"][3].value = "monthly";
-  form["form-elements"][4].value = "";
-  form["form-elements"][5].value = "monthly";
-  form["form-elements"][6].value = "";
+  document.getElementById("starting-amount").value = "";
+  document.getElementById("additional-contribution").value = "";
+  document.getElementById("time-amount").value = "";
+  document.getElementById("time-amount-period").value = "monthly";
+  document.getElementById("return-rate").value = "";
+  document.getElementById("evaluation-period").value = "monthly";
+  document.getElementById("tax-rate").value = "";
   resetCharts();
 
   const errorInputsContainers = document.querySelectorAll(".error");
@@ -219,17 +242,21 @@ for (const formElement of form) {
     formElement.addEventListener("blur", validateInput);
   }
 }
-const mainElement = document.querySelector("main");
 const carouselElement = document.getElementById("carousel");
 const previousButton = document.getElementById("slide-arrow-previous");
 const nextButton = document.getElementById("slide-arrow-next");
-
+const expandButton = document.getElementById("expand-main");
+const compressButton = document.getElementById("compress-main");
 previousButton.addEventListener("click", () => {
   carouselElement.scrollLeft -= mainElement.clientWidth;
+  nextButton.classList.remove("hidden");
+  previousButton.classList.add("hidden");
 });
 
 nextButton.addEventListener("click", () => {
   carouselElement.scrollLeft += mainElement.clientWidth;
+  previousButton.classList.remove("hidden");
+  nextButton.classList.add("hidden");
 });
 
 form.addEventListener("submit", (event) => {
@@ -241,3 +268,6 @@ form.addEventListener("submit", (event) => {
 });
 
 clearFormButton.addEventListener("click", clearForm);
+
+expandButton.addEventListener("click", expandMain);
+compressButton.addEventListener("click", compressMain);

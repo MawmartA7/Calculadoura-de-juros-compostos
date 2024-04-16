@@ -9,29 +9,29 @@
 </head>
 
 <body class="w-full h-[100dvh] grid grid-rows-2 grid-cols-3 font-medium box-content">
-  <asid class="bg-zinc-700 text-emerald-600 row-span-2 flex flex-col justify-between py-5 px-2">
+  <aside class="bg-zinc-700 text-emerald-600 row-span-2 col-span-1 flex flex-col justify-between py-5 px-2">
     <h1 class="text-2xl text-center font-bold px-6">Calculadora de Investimentos</h1>
     <form class="w-full" id="investment-form">
-      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem]">
+      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem] mb-5">
         <label class="font-bold" for="starting-amount">Investimento inicial</label>
         <div class="flex text-black">
           <input class="w-1/6 text-center rounded-l-lg" type="text" value="R$" disabled>
-          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0.00" required name="form-elements"
+          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0.00" required name="starting-amount"
             id="starting-amount">
         </div>
       </div>
-      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem]">
+      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem] mb-5">
         <label class="font-bold" for="additional-contribution">Aportes adicionais</label>
         <div class="flex text-black">
           <input class="w-1/6 text-center rounded-l-lg" type="text" value="R$" disabled>
-          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0.00" name="form-elements"
+          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0.00" name="additional-contribution"
             id="additional-contribution">
         </div>
       </div>
-      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem]">
+      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem] mb-5">
         <label class="font-bold" for="time-amount">Prazo</label>
         <div class="flex text-black">
-          <input class="w-4/6 rounded-l-lg pl-1.5" type="text" placeholder="0" required name="form-elements"
+          <input class="w-4/6 rounded-l-lg pl-1.5" type="text" placeholder="0" required name="time-amount"
             id="time-amount">
           <select
             class="w-2/6 rounded-r-lg text-center border-l-2 border-black hover:bg-zinc-800 hover:shadow-2xl hover:text-emerald-600 focus:bg-zinc-800 focus:text-emerald-600 cursor-pointer select-none"
@@ -41,11 +41,11 @@
           </select>
         </div>
       </div>
-      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem]">
+      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem] mb-5">
         <label class="font-bold" for="return-rate">Rentabilidade</label>
         <div class="flex text-black">
           <input class="w-1/6 font-[750] text-center rounded-l-lg" type="text" value="%" disabled>
-          <input class="w-3/6 pl-1.5" type="text" placeholder="0" required name="form-elements" id="return-rate">
+          <input class="w-3/6 pl-1.5" type="text" placeholder="0" required name="return-rate" id="return-rate">
           <select
             class="w-2/6 rounded-r-lg text-center border-l-2 border-black hover:bg-zinc-800 hover:shadow-2xl hover:text-emerald-600 focus:bg-zinc-800 focus:text-emerald-600 cursor-pointer select-none"
             der="0.00" required name="form-elements" id="evaluation-period">
@@ -54,36 +54,45 @@
           </select>
         </div>
       </div>
-      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem]">
+      <div class="flex w-full flex-col px-6 my-2  h-[4.25rem] mb-5">
         <label class="font-bold" for="tax-rate">Impostos sobre lucro</label>
         <div class="flex text-black">
           <input class="w-1/6 font-[750] text-center rounded-l-lg" type="text" value="%" disabled>
-          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0" name="form-elements" id="tax-rate">
+          <input class="w-5/6 rounded-r-lg pl-1.5" type="text" placeholder="0" name="tax-rate" id="tax-rate">
         </div>
       </div>
     </form>
     <div class="flex h-12 px-6 my-8 w-full gap-2">
-      <button class=" w-1/2 rounded-lg bg-black text-emerald-600 hover:bg-zinc-950" type="submit" form="investment-form"
-        id="calculate-results">Calcular</button>
-      <button class="w-1/2 rounded-lg hover:bg-zinc-900" id="clear-form">Limpar</button>
+      <button class="w-1/2 rounded-lg ease-out duration-300  bg-black text-emerald-600 hover:bg-zinc-950" type="submit"
+        form="investment-form" id="calculate-results">Calcular</button>
+      <button class="w-1/2 rounded-lg transition-all ease-out duration-300  hover:bg-zinc-900"
+        id="clear-form">Limpar</button>
     </div>
-  </asid>
+  </aside>
   <main class="row-span-2 col-span-2 relative">
     <button
-      class="absolute top-1/2 left-0 text-6xl bg-slate-200 opacity-50 w-8 hover:opacity-100 focus:opacity-100 max-h-20 rounded-r-xl "
+      class="absolute top-1/2 left-0 text-6xl bg-slate-200 opacity-50 w-8 transition-all ease-out duration-300 hover:opacity-100 focus:opacity-100 max-h-20 rounded-r-xl hidden"
       id="slide-arrow-previous"><i class="fa-sharp fa-solid fa-caret-left " style="color: #555;"></i></button>
     <button
-      class="absolute top-1/2 right-0 text-6xl bg-slate-200 opacity-50 w-8 hover:opacity-100 focus:opacity-100 max-h-20 rounded-l-xl "
+      class="absolute top-1/2 right-0 text-6xl bg-slate-200 opacity-50 w-8 transition-all ease-out duration-300  hover:opacity-100 focus:opacity-100 max-h-20 rounded-l-xl "
       id="slide-arrow-next"><i class="fa-sharp fa-solid fa-caret-right " style="color: #555;"></i></button>
-    <div class="h-full w-full flex overflow-x-auto scroll-smooth" id="carousel">
-      <section class="h-full basis-full shrink-0" id="charts-container">
-        <div class="h-[36%] flex flex-col items-center pb-10">
-          <p class="font-bold text-lg">Resultado Final</p>
-          <canvas id="final-money-distribution"></canvas>
+    <div class="h-full w-full flex overflow-x-hidden scroll-smooth" id="carousel">
+      <section class="flex flex-col h-full basis-full shrink-0" id="charts-container">
+        <div class="flex justify-end p-4">
+          <button
+            class="text-2xl w-12 text-zinc-900 border p-2 rounded-xl border-zinc-700 transition-all ease-out duration-300 hover:text-zinc-600 hover:bg-zinc-100"
+            id="expand-main"><i class="fa-solid fa-expand"></i></button>
+          <button
+            class="text-2xl w-12 text-zinc-900 border p-2 rounded-xl border-zinc-700 transition-all ease-out duration-300 hover:text-zinc-600 hover:bg-zinc-100 hidden"
+            id="compress-main"><i class="fa-solid fa-compress"></i></button>
         </div>
-        <div class="h-[56%] flex flex-col items-center">
+        <div class="h-[34%] w-full flex flex-col items-center pb-10">
+          <p class="font-bold text-lg">Resultado Final</p>
+          <canvas class="w-full" id="final-money-distribution"></canvas>
+        </div>
+        <div class="h-[54%] w-full flex flex-col items-center">
           <p class="font-bold text-lg">Progressão</p>
-          <canvas id="progression"></canvas>
+          <canvas class="w-full" id="progression"></canvas>
         </div>
       </section>
       <section class="h-full basis-full shrink-0 overflow-y-auto" id="table-container">
